@@ -382,7 +382,7 @@ h1::after {
 /* --- Card Task Actions (Delete/Complete) --- */
 .btn-delete-task {
   position: absolute;
-  top: 10px;
+  top: 5px;
   right: 10px;
   background: #fdf2f2;
   color: #c0392b;
@@ -399,23 +399,37 @@ h1::after {
 
 .btn-complete-task {
   position: absolute;
-  bottom: 10px;
+  bottom: 5px;
   right: 10px;
   background: #edf7ed;
   color: #27ae60;
   border: 1px solid #a9dfbf;
   border-radius: 4px;
-  font-size: 9px;
+  font-size: 10px;
   padding: 4px 8px;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: bold;
   cursor: pointer;
   display: none;
 }
 
+.edit-task-btn {
+  display: none;
+  cursor: pointer;
+  font-size: larger;
+}
+
+.edit-task-btn:hover {
+  color: #2980b9;
+}
+
+
 .card:hover .btn-delete-task,
 .card:hover .btn-complete-task {
   display: flex;
+}
+.card:hover .edit-task-btn {
+  display: inline;
 }
 
 .btn-delete-task:hover {
