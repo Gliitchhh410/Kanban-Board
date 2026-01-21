@@ -413,9 +413,23 @@ h1::after {
   display: none;
 }
 
+.edit-task-btn {
+  display: none;
+  cursor: pointer;
+  font-size: larger;
+}
+
+.edit-task-btn:hover {
+  color: #2980b9;
+}
+
+
 .card:hover .btn-delete-task,
 .card:hover .btn-complete-task {
   display: flex;
+}
+.card:hover .edit-task-btn {
+  display: inline;
 }
 
 .btn-delete-task:hover {
