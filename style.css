@@ -382,10 +382,10 @@ h1::after {
 /* --- Card Task Actions (Delete/Complete) --- */
 .btn-delete-task {
   position: absolute;
-  top: 5px;
+  top: 10px;
   right: 10px;
+  background: #fdf2f2;
   color: #c0392b;
-  background: #fee2e2;
   border: 1px solid #fab1a0;
   border-radius: 4px;
   width: 24px;
@@ -394,19 +394,19 @@ h1::after {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .btn-complete-task {
   position: absolute;
-  bottom: 5px;
+  bottom: 10px;
   right: 10px;
   background: #edf7ed;
   color: #27ae60;
   border: 1px solid #a9dfbf;
   border-radius: 4px;
   font-size: 9px;
-  padding: 5px 8px;
+  padding: 4px 8px;
   text-transform: uppercase;
   font-weight: 700;
   cursor: pointer;
@@ -425,8 +425,7 @@ h1::after {
 }
 .btn-complete-task:hover {
   background: #27ae60;
-  color: #000000;
-  font-weight: bolder;
+  color: white;
   border-color: #27ae60;
 }
 
