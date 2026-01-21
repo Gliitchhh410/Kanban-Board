@@ -402,7 +402,7 @@ class Task {
 
     this.#taskElem.innerHTML = `
       <span class="title-text">${this.title}</span>
-      <button class="btn-delete-task" title="Delete">X</button>
+      <button class="btn-delete-task" title="Delete">x</button>
       <button class="btn-complete-task" title="Complete">✓</button>
       <span class="edit-task-btn" title="Edit">✎</span>
     `
