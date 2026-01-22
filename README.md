@@ -45,3 +45,18 @@ To run this project locally, you don't need any complex build tools or servers.
 2.  **Navigate to the project folder:**
     ```bash
     cd Kanban-Board
+    ```
+3.  **Open the application:**
+   - Simply double-click `index.html` to open it in your web browser.
+   - Optional: Use a live server extension (like Live Server in VS Code) for a better development experience.
+
+## 🔮 Future Improvements
+- [ ] Add more details to the tasks
+- [ ] Add a backlog to store new issues
+- [ ] Add assigners and assignees to the tasks
+- [ ] Implement a backend for multi-user support.
+
+## 📄 License
+This project is licensed under the [MIT License](LICENSE).
+
+
