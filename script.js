@@ -158,21 +158,31 @@ const modal = {
     this.title.textContent = titleText
     this.callback = onConfirm
 
-    // Reset Visuals
     this.elem.classList.remove('hidden')
     this.confirmBtn.classList.remove('btn-danger')
 
+    if (!this.msg) {
+      const msgDiv = document.createElement('p')
+      msgDiv.id = 'modal-message'
+      msgDiv.className = 'hidden'
+      this.input.parentNode.insertBefore(msgDiv, this.input)
+      this.msg = msgDiv
+    }
+
     if (type === 'confirm') {
-      // Confirmation Mode: Hide input, show message text
       this.input.classList.add('hidden')
       this.msg.classList.remove('hidden')
       this.msg.textContent = bodyText
     } else {
-      // Input Mode: Show input, hide message text
       this.input.classList.remove('hidden')
       this.msg.classList.add('hidden')
-      this.input.placeholder = bodyText
-      this.input.value = initialValue
+
+      const placeholderText = initialValue || bodyText
+      this.input.placeholder = placeholderText
+      this.input.setAttribute('placeholder', placeholderText)
+
+      this.input.value = ''
+
       setTimeout(() => this.input.focus(), 100)
     }
 
@@ -188,17 +198,20 @@ const modal = {
   },
 }
 
-// Modal Listeners
 modal.confirmBtn.addEventListener('click', () => {
   const isInputMode = !modal.input.classList.contains('hidden')
-  const value = modal.input.value.trim()
+  let value = modal.input.value.trim()
+
+  if (!value && isInputMode) {
+    value = modal.input.placeholder
+  }
 
   if (isInputMode) {
-    if (value) {
+    if (value && value.length < 20) {
       if (modal.callback) modal.callback(value)
       modal.close()
     } else {
-      modal.input.style.borderColor = '#e74c3c' // Red shake effect
+      modal.input.style.borderColor = '#e74c3c'
       setTimeout(() => (modal.input.style.borderColor = ''), 500)
     }
   } else {
@@ -206,7 +219,6 @@ modal.confirmBtn.addEventListener('click', () => {
     modal.close()
   }
 })
-
 modal.cancelBtn.addEventListener('click', () => modal.close())
 
 modal.input.addEventListener('keypress', (e) => {
