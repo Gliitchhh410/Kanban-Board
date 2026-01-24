@@ -143,6 +143,7 @@ const modal = {
   title: document.getElementById('modal-title'),
   input: document.getElementById('modal-input'),
   msg: document.getElementById('modal-message'),
+  errorElem: document.getElementById('modal-error'),
   confirmBtn: document.getElementById('modal-confirm'),
   cancelBtn: document.getElementById('modal-cancel'),
   callback: null,
@@ -160,7 +161,7 @@ const modal = {
 
     this.elem.classList.remove('hidden')
     this.confirmBtn.classList.remove('btn-danger')
-
+    this.hideError()
     if (!this.msg) {
       const msgDiv = document.createElement('p')
       msgDiv.id = 'modal-message'
@@ -196,7 +197,21 @@ const modal = {
     this.callback = null
     this.input.value = ''
   },
+  showError(message) {
+    this.errorElem.textContent = message
+    this.errorElem.classList.remove('hidden')
+    this.input.style.borderColor = '#e74c3c'
+    this.input.classList.add('shake') // Add shake animation class
+    setTimeout(() => this.input.classList.remove('shake'), 500)
+  },
+  hideError() {
+    this.errorElem.textContent = ''
+    this.errorElem.classList.add('hidden')
+    this.input.style.borderColor = ''
+  },
 }
+
+modal.input.addEventListener('input', () => modal.hideError())
 
 modal.confirmBtn.addEventListener('click', () => {
   const isInputMode = !modal.input.classList.contains('hidden')
@@ -210,12 +225,34 @@ modal.confirmBtn.addEventListener('click', () => {
   }
 
   if (isInputMode) {
-    if (value && value.length < 20 && !isDuplicate) {
-      if (modal.callback) modal.callback(value)
-      modal.close()
+    if (!value) {
+      modal.showError('Input cannot be empty')
+      return
+    }
+
+    if (value.length > 20) {
+      modal.showError('Character limit exceeded (Max 20)')
+      return
+    }
+    if (isDuplicate) {
+      modal.showError('Column name already exists')
+      return
+    }
+
+    let errorMsg = null
+
+    if (modal.callback) {
+      const result = modal.callback(value)
+      if (typeof result === 'string') {
+        errorMsg = result
+      }
+    }
+
+
+    if (errorMsg) {
+      modal.showError(errorMsg)
     } else {
-      modal.input.style.borderColor = '#e74c3c'
-      setTimeout(() => (modal.input.style.borderColor = ''), 500)
+      modal.close()
     }
   } else {
     if (modal.callback) modal.callback()
