@@ -2,6 +2,25 @@
    SECTION 1: UTILITIES (Helpers)
    ========================================= */
 
+function getDragAfter(container, y) {
+  const draggableElements = [
+    ...container.querySelectorAll('.card:not(.dragging)'),
+  ]
+  return draggableElements.reduce(
+    (closest, child) => {
+      const box = child.getBoundingClientRect()
+      const offset = y - box.top - box.height / 2
+
+      if (offset < 0 && offset > closest.offset) {
+        return { offset: offset, element: child }
+      } else {
+        return closest
+      }
+    },
+    { offset: Number.NEGATIVE_INFINITY },
+  ).element
+}
+
 function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).substring(2)
 }
@@ -248,7 +267,6 @@ modal.confirmBtn.addEventListener('click', () => {
       }
     }
 
-
     if (errorMsg) {
       modal.showError(errorMsg)
     } else {
@@ -402,8 +420,13 @@ class Column {
     const listItems = this.#colElem.querySelector('.list-items')
     listItems.addEventListener('dragover', (e) => {
       e.preventDefault()
+      const afterElement = getDragAfter(listItems, e.clientY)
       const draggable = document.querySelector('.dragging')
-      listItems.prepend(draggable)
+      if (afterElement == null) {
+        listItems.appendChild(draggable)
+      } else {
+        listItems.insertBefore(draggable, afterElement)
+      }
     })
 
     this.render()
