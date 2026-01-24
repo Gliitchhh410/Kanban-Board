@@ -201,13 +201,16 @@ const modal = {
 modal.confirmBtn.addEventListener('click', () => {
   const isInputMode = !modal.input.classList.contains('hidden')
   let value = modal.input.value.trim()
+  const isDuplicate = mainBoard.columns.some(
+    (col) => col.title.toLowerCase() === value.toLowerCase(),
+  )
 
   if (!value && isInputMode) {
     value = modal.input.placeholder
   }
 
   if (isInputMode) {
-    if (value && value.length < 20) {
+    if (value && value.length < 20 && !isDuplicate) {
       if (modal.callback) modal.callback(value)
       modal.close()
     } else {
